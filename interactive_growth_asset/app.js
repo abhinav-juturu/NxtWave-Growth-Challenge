@@ -143,6 +143,7 @@ def review_code(code_snippet):
 // LocalStorage Persistence Configuration
 const STORAGE_KEY_REGISTRATIONS = "nxtwave_registrations_v2";
 const STORAGE_KEY_CURRENT_USER = "nxtwave_current_user_v2";
+const STORAGE_KEY_SEED_DONE = "nxtwave_sim_seed_v2";
 const WEBHOOK_ENDPOINT = "https://script.google.com/macros/s/AKfycby-placeholder-webhook/exec"; // Optional external webhook endpoint
 
 // Global State
@@ -150,16 +151,178 @@ let currentTrack = "rag";
 let diagnosticScores = {};
 let activeUser = null;
 
+// ==========================================================================
+// SIMULATION DATA ENGINE
+// ==========================================================================
+
+const SIM_STUDENTS = [
+  { fullName: "Arjun Mehta",       college: "VJTI Mumbai",           gradYear: "2027", track: "rag",     minsAgo: 3   },
+  { fullName: "Priya Sharma",      college: "CBIT Hyderabad",        gradYear: "2027", track: "agent",   minsAgo: 7   },
+  { fullName: "Rahul Nair",        college: "PSG Tech Coimbatore",   gradYear: "2027", track: "copilot", minsAgo: 12  },
+  { fullName: "Sneha Pillai",      college: "RV College Bengaluru",  gradYear: "2027", track: "cv",      minsAgo: 18  },
+  { fullName: "Karthik Reddy",     college: "JNTUH Hyderabad",       gradYear: "2027", track: "rag",     minsAgo: 25  },
+  { fullName: "Ananya Singh",      college: "NSIT New Delhi",        gradYear: "2027", track: "agent",   minsAgo: 31  },
+  { fullName: "Vishal Kumar",      college: "AKGEC Ghaziabad",       gradYear: "2027", track: "rag",     minsAgo: 40  },
+  { fullName: "Deepa Raghunath",   college: "Anna Univ. Chennai",    gradYear: "2027", track: "copilot", minsAgo: 48  },
+  { fullName: "Sriram Balaji",     college: "SRM Kattankulathur",    gradYear: "2027", track: "cv",      minsAgo: 55  },
+  { fullName: "Meera Krishnan",    college: "NIT Trichy",            gradYear: "2027", track: "rag",     minsAgo: 62  },
+  { fullName: "Tanmay Joshi",      college: "DBIT Mumbai",           gradYear: "2027", track: "agent",   minsAgo: 70  },
+  { fullName: "Pooja Verma",       college: "LNMIIT Jaipur",         gradYear: "2027", track: "copilot", minsAgo: 80  },
+  { fullName: "Aditya Pandey",     college: "AKTU Lucknow",          gradYear: "2027", track: "rag",     minsAgo: 92  },
+  { fullName: "Lakshmi Devi",      college: "VIT Vellore",           gradYear: "2027", track: "agent",   minsAgo: 105 },
+  { fullName: "Suresh Babu",       college: "MVSR Hyderabad",        gradYear: "2027", track: "cv",      minsAgo: 118 },
+  { fullName: "Nandini Iyer",      college: "IIT Madras (Diploma)",  gradYear: "2027", track: "rag",     minsAgo: 130 },
+  { fullName: "Rohit Desai",       college: "MIT Pune",              gradYear: "2027", track: "copilot", minsAgo: 142 },
+  { fullName: "Swathi Reddy",      college: "Osmania Univ.",         gradYear: "2027", track: "agent",   minsAgo: 155 },
+  { fullName: "Aakash Gupta",      college: "DTU New Delhi",         gradYear: "2027", track: "rag",     minsAgo: 170 },
+  { fullName: "Bhavna Tiwari",     college: "MITS Gwalior",          gradYear: "2027", track: "cv",      minsAgo: 185 },
+  { fullName: "Chaitanya Patel",   college: "GEC Gandhinagar",       gradYear: "2027", track: "copilot", minsAgo: 200 },
+  { fullName: "Divya Mohan",       college: "SASTRA Thanjavur",      gradYear: "2027", track: "rag",     minsAgo: 218 },
+  { fullName: "Farhan Shaikh",     college: "VJTI Mumbai",           gradYear: "2027", track: "agent",   minsAgo: 235 },
+  { fullName: "Geeta Narayanan",   college: "NIT Warangal",          gradYear: "2027", track: "cv",      minsAgo: 252 },
+  { fullName: "Harshit Agrawal",   college: "HBTU Kanpur",           gradYear: "2027", track: "rag",     minsAgo: 270 },
+  { fullName: "Ishita Bose",       college: "Jadavpur Univ.",        gradYear: "2027", track: "copilot", minsAgo: 290 },
+  { fullName: "Jayesh Mistry",     college: "BVM Engineering",       gradYear: "2027", track: "agent",   minsAgo: 310 },
+  { fullName: "Kavitha Sundar",    college: "SSN College Chennai",   gradYear: "2027", track: "rag",     minsAgo: 330 },
+  { fullName: "Lokesh Yadav",      college: "RTU Kota",              gradYear: "2027", track: "cv",      minsAgo: 355 },
+  { fullName: "Manisha Patil",     college: "Sinhgad Tech Pune",     gradYear: "2027", track: "copilot", minsAgo: 378 },
+  { fullName: "Nikhil Teja",       college: "CBIT Hyderabad",        gradYear: "2027", track: "rag",     minsAgo: 400 },
+  { fullName: "Oindrila Das",      college: "Heritage Inst. Kolkata",gradYear: "2027", track: "agent",   minsAgo: 424 },
+  { fullName: "Pranav Kulkarni",   college: "COEP Pune",             gradYear: "2027", track: "cv",      minsAgo: 450 },
+  { fullName: "Rekha Srinivasan",  college: "CEG Anna Univ.",        gradYear: "2027", track: "rag",     minsAgo: 478 },
+  { fullName: "Saurabh Chauhan",   college: "IET Lucknow",           gradYear: "2027", track: "copilot", minsAgo: 508 },
+  { fullName: "Tejaswini Rao",     college: "MVSR Hyderabad",        gradYear: "2027", track: "agent",   minsAgo: 540 },
+  { fullName: "Udit Malhotra",     college: "NSIT New Delhi",        gradYear: "2027", track: "rag",     minsAgo: 572 },
+  { fullName: "Varsha Naik",       college: "KJ Somaiya Mumbai",     gradYear: "2027", track: "cv",      minsAgo: 610 },
+  { fullName: "Wasim Ansari",      college: "VIT Pune",              gradYear: "2027", track: "copilot", minsAgo: 648 },
+  { fullName: "Yamini Raj",        college: "PSG Tech Coimbatore",   gradYear: "2027", track: "rag",     minsAgo: 690 },
+  { fullName: "Zoya Siddiqui",     college: "Amity Univ. Noida",     gradYear: "2027", track: "agent",   minsAgo: 732 },
+  { fullName: "Abhishek Thakur",   college: "NIT Rourkela",          gradYear: "2027", track: "cv",      minsAgo: 780 },
+  { fullName: "Bhargavi Nair",     college: "TKM College Kollam",    gradYear: "2027", track: "copilot", minsAgo: 828 },
+  { fullName: "Chirag Patel",      college: "GEC Surat",             gradYear: "2027", track: "rag",     minsAgo: 882 },
+  { fullName: "Disha Goyal",       college: "Thapar Inst. Patiala",  gradYear: "2027", track: "agent",   minsAgo: 938 },
+  { fullName: "Elan Selvan",       college: "Thiagarajar CEng",      gradYear: "2027", track: "cv",      minsAgo: 996 },
+  { fullName: "Falguni Jain",      college: "LNMIIT Jaipur",         gradYear: "2027", track: "copilot", minsAgo: 1060},
+];
+
+// Deterministic ticket IDs for seeded students (pre-computed)
+const SIM_TICKET_IDS = [
+  "NXTAI-3847","NXTAI-5129","NXTAI-7203","NXTAI-4416","NXTAI-6831",
+  "NXTAI-2957","NXTAI-8074","NXTAI-1593","NXTAI-9264","NXTAI-3712",
+  "NXTAI-6045","NXTAI-4883","NXTAI-7391","NXTAI-2268","NXTAI-5540",
+  "NXTAI-8817","NXTAI-1034","NXTAI-6692","NXTAI-3319","NXTAI-9105",
+  "NXTAI-4427","NXTAI-7780","NXTAI-2134","NXTAI-5561","NXTAI-8888",
+  "NXTAI-3206","NXTAI-6673","NXTAI-1941","NXTAI-9318","NXTAI-4454",
+  "NXTAI-7775","NXTAI-2207","NXTAI-5548","NXTAI-8891","NXTAI-3233",
+  "NXTAI-6619","NXTAI-1977","NXTAI-9344","NXTAI-4480","NXTAI-7716",
+  "NXTAI-2253","NXTAI-5582","NXTAI-8819","NXTAI-3255","NXTAI-6696",
+  "NXTAI-1913","NXTAI-9380",
+];
+
+// Activity ticker messages for the live feed
+const SIM_ACTIVITY_MESSAGES = [
+  { name: "Arjun M.",    college: "VJTI Mumbai",         track: "Full-Stack GenAI",   time: "just now"  },
+  { name: "Priya S.",    college: "CBIT Hyderabad",      track: "AI Workflows",       time: "2m ago"     },
+  { name: "Karthik R.",  college: "JNTUH Hyderabad",     track: "Full-Stack GenAI",   time: "5m ago"     },
+  { name: "Sneha P.",    college: "RV College",          track: "Browser AI Vision",  time: "9m ago"     },
+  { name: "Tanmay J.",   college: "DBIT Mumbai",         track: "AI Workflows",       time: "14m ago"    },
+  { name: "Ananya S.",   college: "NSIT Delhi",          track: "AI Workflows",       time: "19m ago"    },
+  { name: "Vishal K.",   college: "AKGEC Ghaziabad",     track: "Full-Stack GenAI",   time: "26m ago"    },
+  { name: "Deepa R.",    college: "Anna Univ.",          track: "Developer Tools",    time: "34m ago"    },
+  { name: "Rohit D.",    college: "MIT Pune",            track: "Developer Tools",    time: "41m ago"    },
+  { name: "Meera K.",    college: "NIT Trichy",          track: "Full-Stack GenAI",   time: "50m ago"    },
+];
+
+let simActivityIdx = 0;
+
+/**
+ * Seed localStorage with realistic pre-existing registrations (runs only once).
+ */
+function seedSimulationData() {
+  try {
+    if (localStorage.getItem(STORAGE_KEY_SEED_DONE)) return; // Already seeded
+
+    const now = Date.now();
+    const seeded = SIM_STUDENTS.map((s, i) => ({
+      ticketId: SIM_TICKET_IDS[i],
+      fullName: s.fullName,
+      email: `${s.fullName.toLowerCase().replace(/\s+/g, ".")}@college.edu.in`,
+      whatsapp: `98765${String(10000 + i).slice(1)}`,
+      college: s.college,
+      gradYear: s.gradYear,
+      track: s.track,
+      referredBy: null,
+      timestamp: new Date(now - s.minsAgo * 60 * 1000).toISOString(),
+      referralCount: Math.floor(Math.random() * 4)
+    }));
+
+    saveStoredRegistrations(seeded);
+    localStorage.setItem(STORAGE_KEY_SEED_DONE, "1");
+  } catch (e) {
+    console.warn("Seed failed:", e);
+  }
+}
+
+/**
+ * Animate the registration counter from startVal → endVal over ~1.2 s.
+ */
+function animateCounter(el, startVal, endVal, duration = 1200) {
+  if (!el) return;
+  const range = endVal - startVal;
+  const startTime = performance.now();
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease-out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(startVal + range * eased);
+    if (progress < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+/**
+ * Show one activity ticker notification (cycling through SIM_ACTIVITY_MESSAGES).
+ */
+function showActivityTicker() {
+  const data = SIM_ACTIVITY_MESSAGES[simActivityIdx % SIM_ACTIVITY_MESSAGES.length];
+  simActivityIdx++;
+
+  const ticker = document.getElementById("activity-ticker");
+  if (!ticker) return;
+
+  ticker.innerHTML = `
+    <span class="ticker-avatar">${data.name.charAt(0)}</span>
+    <div class="ticker-text">
+      <strong>${data.name}</strong> from <em>${data.college}</em> just claimed their Admit Pass
+      <span class="ticker-track-tag">${data.track}</span>
+    </div>
+    <span class="ticker-time">${data.time}</span>
+  `;
+  ticker.classList.add("ticker-visible");
+
+  setTimeout(() => {
+    ticker.classList.remove("ticker-visible");
+  }, 4000);
+}
+
 // Initialize on DOM Load
 document.addEventListener("DOMContentLoaded", () => {
   if (window.lucide) {
     window.lucide.createIcons();
   }
+  seedSimulationData();
   setupTrackTabs();
   renderTrackSpec("rag");
   checkUrlReferralParam();
   loadPersistedData();
   updateRegistrationCounters();
+
+  // Start live activity ticker after a short delay, then every 8 s
+  setTimeout(() => {
+    showActivityTicker();
+    setInterval(showActivityTicker, 8000);
+  }, 3500);
 });
 
 // Load Persisted Storage
@@ -472,8 +635,13 @@ function updateRegistrationCounters() {
   const records = getStoredRegistrations();
   const counterEl = document.getElementById("reg-count-display");
   if (counterEl) {
-    // Show actual registrations + baseline sample
-    counterEl.textContent = `${records.length}`;
+    const current = parseInt(counterEl.textContent) || 0;
+    const target = records.length;
+    if (target !== current) {
+      animateCounter(counterEl, current, target);
+    } else {
+      counterEl.textContent = target;
+    }
   }
 }
 
