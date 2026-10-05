@@ -630,17 +630,30 @@ function updateUserMilestoneUI(user) {
   }
 }
 
-// Update Verified Registration Counters
+// Update Verified Registration Counters (navbar + stats bar kept in sync)
 function updateRegistrationCounters() {
   const records = getStoredRegistrations();
+  const target = records.length;
+
+  // Navbar counter
   const counterEl = document.getElementById("reg-count-display");
   if (counterEl) {
     const current = parseInt(counterEl.textContent) || 0;
-    const target = records.length;
     if (target !== current) {
       animateCounter(counterEl, current, target);
     } else {
       counterEl.textContent = target;
+    }
+  }
+
+  // Stats bar "Students Registered" — always in sync with navbar
+  const statEl = document.getElementById("stat-registrations");
+  if (statEl) {
+    const current = parseInt(statEl.textContent) || 0;
+    if (target !== current) {
+      animateCounter(statEl, current, target);
+    } else {
+      statEl.textContent = target;
     }
   }
 }
