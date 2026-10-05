@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Build Your First AI Project in 60 Minutes | NxtWave Workshop Challenge Prototype</title>
+  <meta name="description"
+    content="Hands-on live engineering workshop simulation for final-year engineering students (Class of 2027). Build and deploy a real AI application in 60 minutes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+  <!-- Pinned CDN Dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Concept Prototype Notice Banner -->
+  <div class="prototype-disclaimer-bar">
+    <div class="container prototype-bar-content">
+      <span class="proto-tag">CHALLENGE PROTOTYPE</span>
+      <span>Interactive growth simulation built for the <strong>NxtWave Growth Intern Challenge</strong> • Target: 500
+        Class of 2027 Registrations</span>
+      <span class="proto-status" id="backend-status-indicator"><span class="status-dot online"></span> Storage
+        Active</span>
+    </div>
+  </div>
+
+  <!-- Top Announcement Notification Bar -->
+  <aside class="top-bar">
+    <div class="container top-bar-content">
+      <div class="top-bar-left">
+        <span class="badge-dot"></span>
+        <span class="top-bar-text"><strong>NSDC Partner</strong> & World Economic Forum Technology Pioneer 2024 •
+          Engineering Skilling Initiative</span>
+      </div>
+      <div class="top-bar-right">
+        <span class="countdown-mini">Live Live Build Session: <strong>Saturday, 7:00 PM IST</strong></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <div class="brand">
+        <div class="brand-logo">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true">
+            <rect width="28" height="28" rx="6" fill="#0056D2" />
+            <path d="M7 19L11.5 9L16.5 19L21 9" stroke="white" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <div class="brand-text">
+            <span class="brand-title">NxtWave</span>
+            <span class="brand-subtitle">NIAT Growth Lab</span>
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav-links" aria-label="Main Navigation">
+        <a href="#placement-check" class="nav-link">Placement Diagnostic</a>
+        <a href="#project-customizer" class="nav-link">Project Tracks</a>
+        <a href="#referral-section" class="nav-link">Campus Ambassadors</a>
+        <a href="#faq-section" class="nav-link">FAQ</a>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="live-seats-pill">
+          <span class="live-pulse"></span>
+          <span id="nav-seat-counter">Verified Registrations: <strong id="reg-count-display">0</strong> / 500</span>
+        </div>
+        <a href="#register-section" class="btn btn-primary btn-sm">Claim Admit Pass</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-background-grid"></div>
+    <div class="hero-glow"></div>
+
+    <div class="container hero-container">
+      <div class="hero-header-badge">
+        <span class="badge-icon"><i data-lucide="shield-check"></i></span>
+        <span>Class of 2027 Engineering Placement Sprint (2026–2027)</span>
+      </div>
+
+      <h1 class="hero-title">
+        Build & Deploy Your First <br>
+        <span class="gradient-text">Practical AI Application</span> in 60 Minutes.
+      </h1>
+
+      <p class="hero-description">
+        Recruiters in the 2026–2027 placement season look for practical AI proof-of-work, not generic classroom
+        assignments. In one focused hands-on build, code a working AI application, deploy a public link, and format
+        proven ATS resume bullet points.
+      </p>
+
+      <!-- Key Workshop Highlights Grid -->
+      <div class="hero-highlights-grid">
+        <div class="highlight-item">
+          <div class="highlight-icon-wrap"><i data-lucide="clock"></i></div>
+          <div class="highlight-text">
+            <div class="highlight-title">60-Minute Live Build</div>
+            <div class="highlight-sub">Realistic, beginner-friendly implementation.</div>
+          </div>
+        </div>
+
+        <div class="highlight-item">
+          <div class="highlight-icon-wrap"><i data-lucide="globe"></i></div>
+          <div class="highlight-text">
+            <div class="highlight-title">Live Deployed URL</div>
+            <div class="highlight-sub">Shareable link on Streamlit / Vercel cloud.</div>
+          </div>
+        </div>
+
+        <div class="highlight-item">
+          <div class="highlight-icon-wrap"><i data-lucide="file-check-2"></i></div>
+          <div class="highlight-text">
+            <div class="highlight-title">ATS Resume Template</div>
+            <div class="highlight-sub">Recruiter-ready bullet points with metrics.</div>
+          </div>
+        </div>
+
+        <div class="highlight-item">
+          <div class="highlight-icon-wrap"><i data-lucide="cpu"></i></div>
+          <div class="highlight-text">
+            <div class="highlight-title">Zero Local GPU Needed</div>
+            <div class="highlight-sub">Runs completely in your web browser.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero Call-to-Actions -->
+      <div class="hero-cta-wrapper">
+        <a href="#register-section" class="btn btn-primary btn-lg">
+          <span>Claim Free Student Admit Pass</span>
+          <i data-lucide="arrow-right"></i>
+        </a>
+        <a href="#project-customizer" class="btn btn-secondary btn-lg">
+          <i data-lucide="layers"></i>
+          <span>Explore 4 Beginner-Friendly Tracks</span>
+        </a>
+      </div>
+
+      <div class="hero-trust-note">
+        <i data-lucide="check-circle-2"></i> 100% Free Workshop • Organized under NxtWave CCBP 4.0 Skilling Programs
+      </div>
+    </div>
+  </section>
+
+  <!-- Recruiter Trust Bar -->
+  <section class="trust-bar-section">
+    <div class="container">
+      <div class="trust-bar-header">
+        NxtWave CCBP learners are placed across 2,000+ technology and product companies
+      </div>
+      <div class="company-logos-row">
+        <div class="company-badge">Amazon</div>
+        <div class="company-badge">Deloitte</div>
+        <div class="company-badge">TCS</div>
+        <div class="company-badge">Accenture</div>
+        <div class="company-badge">IBM</div>
+        <div class="company-badge">Bank of America</div>
+        <div class="company-badge">Cognizant</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Placement Diagnostic Assessment Tool -->
+  <section class="diagnostic-section" id="placement-check">
+    <div class="container">
+      <div class="panel diagnostic-panel">
+        <div class="panel-header">
+          <div class="pill-tag"><i data-lucide="radar"></i> Technical Shortlisting Diagnostic</div>
+          <h2>Is Your Project Portfolio Ready for 2026–2027 Placements?</h2>
+          <p>Many recruiters report fatigue with identical, boilerplate tutorial clones. Take this 30-second assessment
+            to benchmark your project portfolio:</p>
+        </div>
+
+        <div class="diagnostic-questions-grid" role="radiogroup">
+          <!-- Question 1 -->
+          <fieldset class="question-card" data-q="1">
+            <legend class="q-header">
+              <span class="q-num">01</span>
+              <span class="q-title">Primary technical project currently listed on your resume:</span>
+            </legend>
+            <div class="q-options">
+              <label class="q-opt">
+                <input type="radio" name="q1" value="0" onchange="onDiagnosticChange(1, 0)">
+                <span class="opt-label">E-Commerce / Blog / Library Management System</span>
+              </label>
+              <label class="q-opt">
+                <input type="radio" name="q1" value="1" onchange="onDiagnosticChange(1, 1)">
+                <span class="opt-label">Jupyter Notebook ML (Iris / Titanic / Movie Recommendation)</span>
+              </label>
+              <label class="q-opt">
+                <input type="radio" name="q1" value="3" onchange="onDiagnosticChange(1, 3)">
+                <span class="opt-label">Deployed Application with Live AI / Cloud API Integration</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Question 2 -->
+          <fieldset class="question-card" data-q="2">
+            <legend class="q-header">
+              <span class="q-num">02</span>
+              <span class="q-title">When an interviewer asks "Explain your project architecture":</span>
+            </legend>
+            <div class="q-options">
+              <label class="q-opt">
+                <input type="radio" name="q2" value="0" onchange="onDiagnosticChange(2, 0)">
+                <span class="opt-label">"I followed a YouTube tutorial but find architectural decisions unclear"</span>
+              </label>
+              <label class="q-opt">
+                <input type="radio" name="q2" value="1" onchange="onDiagnosticChange(2, 1)">
+                <span class="opt-label">"I can explain API endpoints, but haven't used vector search or prompts"</span>
+              </label>
+              <label class="q-opt">
+                <input type="radio" name="q2" value="3" onchange="onDiagnosticChange(2, 3)">
+                <span class="opt-label">"I can clearly articulate latency, token trade-offs & data ingestion"</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Question 3 -->
+          <fieldset class="question-card" data-q="3">
+            <legend class="q-header">
+              <span class="q-num">03</span>
+              <span class="q-title">Proof-of-work currently available to hiring managers:</span>
+            </legend>
+            <div class="q-options">
+              <label class="q-opt">
+                <input type="radio" name="q3" value="0" onchange="onDiagnosticChange(3, 0)">
+                <span class="opt-label">No live links, only local code or college project synopsis</span>
+              </label>
+              <label class="q-opt">
+                <input type="radio" name="q3" value="1" onchange="onDiagnosticChange(3, 1)">
+                <span class="opt-label">GitHub repo with minimal commit history & basic README</span>
+              </label>
+              <label class="q-opt">
+                <input type="radio" name="q3" value="3" onchange="onDiagnosticChange(3, 3)">
+                <span class="opt-label">Active live web demo link + documented public GitHub repository</span>
+              </label>
+            </div>
+          </fieldset>
+        </div>
+
+        <!-- Result Box (Appears on completion) -->
+        <div id="diagnostic-result-box" class="diagnostic-result-card hidden" aria-live="polite">
+          <div class="result-badge-row">
+            <span class="status-indicator-badge" id="diag-badge">Assessment Complete</span>
+            <span class="diag-score" id="diag-score-text">Score: 0/9</span>
+          </div>
+          <h3 id="diag-result-title">Portfolio Readiness Analysis</h3>
+          <p id="diag-result-body">Take the first step toward building an authentic project in 60 minutes.</p>
+          <div class="diag-action">
+            <a href="#register-section" class="btn btn-primary btn-sm">Build Your Differentiator in 60 Mins</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Project Customizer Section -->
+  <section class="customizer-section" id="project-customizer">
+    <div class="container">
+      <div class="section-title-wrap text-center">
+        <div class="pill-tag"><i data-lucide="sliders-horizontal"></i> Hands-on Curriculum Preview</div>
+        <h2>Realistic 60-Minute AI Project Tracks</h2>
+        <p>Curated for engineering beginners. Each project is designed to be built and deployed within the 60-minute
+          session without complex setup.</p>
+      </div>
+
+      <!-- Track Switcher Tabs -->
+      <div class="track-tabs-container">
+        <div class="track-tabs" id="track-tabs" role="tablist">
+          <button class="track-tab active" data-role="rag" role="tab" aria-selected="true" id="tab-rag">
+            <div class="tab-indicator"></div>
+            <div class="tab-info">
+              <span class="track-role">Track 1: Full-Stack GenAI</span>
+              <strong class="track-name">Document QA Assistant</strong>
+            </div>
+          </button>
+
+          <button class="track-tab" data-role="agent" role="tab" aria-selected="false" id="tab-agent">
+            <div class="tab-indicator"></div>
+            <div class="tab-info">
+              <span class="track-role">Track 2: AI Workflows</span>
+              <strong class="track-name">Job Matching Researcher</strong>
+            </div>
+          </button>
+
+          <button class="track-tab" data-role="cv" role="tab" aria-selected="false" id="tab-cv">
+            <div class="tab-indicator"></div>
+            <div class="tab-info">
+              <span class="track-role">Track 3: Browser AI Vision</span>
+              <strong class="track-name">Webcam Focus Telemetry</strong>
+            </div>
+          </button>
+
+          <button class="track-tab" data-role="copilot" role="tab" aria-selected="false" id="tab-copilot">
+            <div class="tab-indicator"></div>
+            <div class="tab-info">
+              <span class="track-role">Track 4: Developer Tools</span>
+              <strong class="track-name">AI Code Reviewer & Tester</strong>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Customizer Showcase Workspace -->
+      <div class="customizer-workspace panel">
+
+        <!-- Full-width Track Header -->
+        <div class="workspace-header">
+          <div class="track-badge-pill" id="track-badge-pill">Track 1: Full-Stack GenAI</div>
+          <h3 class="track-headline" id="track-headline">PDF Knowledge Assistant with Streamlit &amp; LLM</h3>
+          <p class="track-summary" id="track-summary">Build a practical web application that allows users to upload a
+            syllabus PDF or textbook chapter and ask questions in natural language with source references.</p>
+        </div>
+
+        <div class="workspace-grid">
+
+          <!-- Left Column: Pipeline & Tech Stack -->
+          <div class="workspace-left">
+            <div class="pipeline-block">
+              <div class="block-label"><i data-lucide="git-merge"></i> 60-Minute Build Roadmap</div>
+              <div class="pipeline-timeline" id="pipeline-steps-wrap">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <div class="tech-stack-block">
+              <div class="block-label"><i data-lucide="box"></i> Beginner-Friendly Tech Stack</div>
+              <div class="tech-pills-row" id="tech-pills-wrap">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: ATS Resume Bullets & Code Explorer -->
+          <div class="workspace-right">
+
+            <!-- ATS Resume Generator Box -->
+            <div class="sub-panel resume-panel">
+              <div class="sub-panel-header">
+                <div class="sub-panel-title">
+                  <i data-lucide="file-check"></i>
+                  <span>Honest ATS Resume Template</span>
+                </div>
+                <button class="btn btn-outline-sm" id="copy-bullets-btn" onclick="copyResumeBullets()">
+                  <i data-lucide="copy"></i> <span>Copy Template</span>
+                </button>
+              </div>
+              <div class="resume-instruction-note">
+                <i data-lucide="info"></i> Replace bracketed metrics <code>[X]</code> with your actual test results
+                after building.
+              </div>
+              <div class="resume-bullets-list" id="resume-bullets-wrap">
+                <!-- Injected via JavaScript -->
+              </div>
+            </div>
+
+            <!-- Clean Code Preview Card -->
+            <div class="sub-panel code-panel">
+              <div class="code-panel-header">
+                <div class="code-file-tag">
+                  <i data-lucide="terminal"></i>
+                  <span id="code-file-name">app.py</span>
+                </div>
+                <span class="code-env-tag">Python 3.10+ &bull; Free Cloud APIs</span>
+              </div>
+              <pre
+                class="code-pre"><code class="code-content" id="code-content-box">// Injected via JavaScript</code></pre>
+            </div>
+
+          </div>
+        </div>
+
+
+        <div class="workspace-footer">
+          <div class="footer-assurance">
+            <i data-lucide="check"></i> All starter code templates, free tier API setup guides, and deployment steps are
+            guided live step-by-step.
+          </div>
+          <a href="#register-section" class="btn btn-primary" onclick="syncSelectedTrack()">
+            <span>Choose This Track & Register Free</span>
+            <i data-lucide="chevron-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Registration & Holographic Admit Pass Section -->
+  <section class="register-section" id="register-section">
+    <div class="container">
+      <!-- Success Status Bar when registered -->
+      <div class="registration-success-bar hidden" id="registration-success-bar">
+        <div class="success-info">
+          <i data-lucide="check-circle-2"></i>
+          <span>Admit Pass & Referral Hub active for <strong id="success-user-name">Candidate</strong> (<span
+              id="success-user-college">College</span>).</span>
+        </div>
+        <button type="button" class="btn btn-outline-sm btn-edit-toggle" onclick="toggleEditRegistration()">
+          <i data-lucide="edit-2"></i> <span>Edit Form Details</span>
+        </button>
+      </div>
+
+      <div class="registration-layout" id="registration-layout">
+
+        <!-- Registration Form Panel -->
+        <div class="panel form-panel" id="form-panel">
+          <div class="form-header">
+            <div class="urgency-counter">
+              <span class="pulse-emerald"></span>
+              <span>Open for Class of 2027 Engineering Students</span>
+            </div>
+            <h2>Register for the Live Build</h2>
+            <p>Fill in your details below to generate your personalized Admit Pass and join the workshop cohort.</p>
+          </div>
+
+          <form id="registration-form" onsubmit="handleRegistration(event)">
+            <div class="form-grid-2">
+              <div class="form-control">
+                <label for="fullName">Full Name <span class="req">*</span></label>
+                <input type="text" id="fullName" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+              </div>
+              <div class="form-control">
+                <label for="email">Student / College Email <span class="req">*</span></label>
+                <input type="email" id="email" placeholder="e.g. rahul@college.edu.in" required autocomplete="email">
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-control">
+                <label for="whatsapp">WhatsApp Number <span class="req">*</span></label>
+                <input type="tel" id="whatsapp" placeholder="10-digit mobile e.g. 9876543210" pattern="[0-9]{10}"
+                  required autocomplete="tel">
+                <small class="hint-text">For session access link and starter repository invite</small>
+              </div>
+              <div class="form-control">
+                <label for="college">College / University Name <span class="req">*</span></label>
+                <input type="text" id="college" placeholder="e.g. JNTUH / CBIT / VIT / PSG Tech" required>
+              </div>
+            </div>
+
+            <div class="form-grid-2">
+              <div class="form-control">
+                <label for="graduationYear">Graduation Year <span class="req">*</span></label>
+                <select id="graduationYear" required>
+                  <option value="2027" selected>2027 (Current Final Year B.Tech / B.E.)</option>
+                  <option value="2028">2028 (Pre-Final Year Engineering)</option>
+                  <option value="2026">2026 (Recent Graduate / Placement Seeker)</option>
+                </select>
+              </div>
+              <div class="form-control">
+                <label for="projectTrack">Selected Project Track <span class="req">*</span></label>
+                <select id="projectTrack" required>
+                  <option value="rag">Track 1: Full-Stack GenAI (Document QA Assistant)</option>
+                  <option value="agent">Track 2: AI Workflows (Job Matching Researcher)</option>
+                  <option value="cv">Track 3: Browser AI Vision (Webcam Focus Telemetry)</option>
+                  <option value="copilot">Track 4: Developer Tools (AI Code Reviewer & Tester)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-control">
+              <label for="referredBy">Referral Code (Optional)</label>
+              <input type="text" id="referredBy" placeholder="Auto-filled if using a peer's invite link">
+            </div>
+
+            <!-- DPDP Data Consent Checkbox -->
+            <div class="consent-checkbox-wrap">
+              <label class="consent-label">
+                <input type="checkbox" id="consentCheck" required checked>
+                <span>I consent to NxtWave collecting my contact details to deliver workshop access links, session
+                  updates, and skilling resources in accordance with the Privacy Policy.</span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit-btn">
+              <span>Generate Verified Student Pass</span>
+              <i data-lucide="shield-check"></i>
+            </button>
+            <div class="security-caption">
+              <i data-lucide="lock"></i> 100% Free • Certified by NxtWave • Official NSDC Training Partner
+            </div>
+          </form>
+        </div>
+
+        <!-- Right Column: Badge + Viral Hub stacked -->
+        <div class="registration-right-col">
+
+          <!-- The Badge / Conference Pass (Preview initially, moves to Left Column on register) -->
+          <div class="ticket-badge-card" id="ticket-badge-card">
+            <div class="badge-punch-hole"></div>
+
+            <div class="badge-top-row">
+              <div class="badge-brand">
+                <span class="badge-nxtwave">NxtWave</span>
+                <span class="badge-lab">NIAT GROWTH LAB</span>
+              </div>
+              <div class="badge-verification-status">
+                <span class="badge-verified-icon">✓</span> VERIFIED PASS
+              </div>
+            </div>
+
+            <div class="badge-event-title">
+              Build Your First AI Project in 60 Minutes
+            </div>
+
+            <div class="badge-candidate-profile">
+              <div class="candidate-avatar" id="badge-avatar">ST</div>
+              <div class="candidate-info">
+                <h4 class="candidate-name" id="badge-user-name">Candidate Name</h4>
+                <div class="candidate-college" id="badge-user-college">College Name • Batch of 2027</div>
+              </div>
+            </div>
+
+            <div class="badge-meta-grid">
+              <div class="badge-meta-col">
+                <span class="meta-label">Schedule</span>
+                <strong class="meta-value">Saturday, 7:00 PM IST</strong>
+              </div>
+              <div class="badge-meta-col">
+                <span class="meta-label">Format</span>
+                <strong class="meta-value">Live Hands-on Coding</strong>
+              </div>
+              <div class="badge-meta-col">
+                <span class="meta-label">Selected Track</span>
+                <strong class="meta-value" id="badge-track-name">Document QA Assistant</strong>
+              </div>
+              <div class="badge-meta-col">
+                <span class="meta-label">Ticket ID</span>
+                <strong class="meta-value font-mono ticket-highlight" id="badge-ticket-id">NXTAI-8924</strong>
+              </div>
+            </div>
+
+            <div class="badge-bottom-row">
+              <div class="badge-qr-box" id="qr-container">
+                <!-- Scannable Ticket ID Code -->
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#0056D2" stroke-width="1.8"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect width="5" height="5" x="3" y="3" rx="1" />
+                  <rect width="5" height="5" x="16" y="3" rx="1" />
+                  <rect width="5" height="5" x="3" y="16" rx="1" />
+                  <path d="M21 16h-3a2 2 0 0 0-2 2v3" />
+                  <path d="M21 21v.01" />
+                  <path d="M12 7v3a2 2 0 0 1-2 2H7" />
+                  <path d="M3 12h.01" />
+                  <path d="M12 3h.01" />
+                  <path d="M12 16v.01" />
+                  <path d="M16 12h1" />
+                  <path d="M21 12v.01" />
+                  <path d="M12 21v-1" />
+                </svg>
+              </div>
+              <div class="badge-instructions">
+                <div class="inst-row"><i data-lucide="calendar"></i> <span>Session Join Credential</span></div>
+                <p>Present this ticket code at workshop check-in to confirm attendance and receive certificate
+                  eligibility.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Post-Registration Viral Action Hub (Appears in Right Column beside Pass) -->
+          <div class="viral-hub-card panel hidden" id="viral-hub-card">
+            <div class="viral-hub-header">
+              <div class="pill-tag"><i data-lucide="gift"></i> Peer Sharing & Study Resources</div>
+              <h3>Invite Batchmates to Unlock Curated Placement Prep</h3>
+              <p>Top 2 student ambassadors on the leaderboard win <strong>₹500 & ₹300 Amazon Vouchers</strong>. Inviting
+                2 batchmates unlocks the curated <em>Top 50 AI Interview Questions Guide</em>.</p>
+            </div>
+
+            <!-- Milestone Progress Bar -->
+            <div class="milestone-tracker">
+              <div class="tracker-bar">
+                <div class="tracker-fill" id="milestone-fill" style="width: 20%;"></div>
+              </div>
+              <div class="tracker-checkpoints">
+                <div class="checkpoint reached">
+                  <span class="cp-circle"><i data-lucide="check"></i></span>
+                  <span class="cp-title">Admit Confirmed</span>
+                </div>
+                <div class="checkpoint" id="cp-tier-2">
+                  <span class="cp-circle">2</span>
+                  <span class="cp-title">Top 50 AI Interview Questions Guide</span>
+                </div>
+                <div class="checkpoint" id="cp-tier-5">
+                  <span class="cp-circle">5</span>
+                  <span class="cp-title">Eligible for Top 2 Ambassador Voucher Pool</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Share Interface -->
+            <div class="share-widget">
+              <div class="share-url-row">
+                <input type="text" readonly id="referral-url-field" value="">
+                <button class="btn btn-secondary btn-sm" onclick="copyReferralLink()">
+                  <i data-lucide="copy"></i> Copy Link
+                </button>
+              </div>
+
+              <div class="share-actions-row">
+                <button class="btn btn-whatsapp" onclick="shareOnWhatsApp()">
+                  <i data-lucide="message-circle"></i> Share on College WhatsApp Group
+                </button>
+              </div>
+            </div>
+          </div><!-- /.viral-hub-card -->
+
+        </div><!-- /.registration-right-col -->
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Campus Referral Ambassadors Leaderboard -->
+  <section class="leaderboard-section" id="referral-section">
+    <div class="container">
+      <div class="panel leaderboard-panel">
+        <div class="leaderboard-heading-row">
+          <div>
+            <div class="pill-tag"><i data-lucide="trophy"></i> Campus Ambassador Benchmarks</div>
+            <h2>Campus Ambassador Leaderboard</h2>
+            <p>Student coordinators helping engineering batches gain hands-on AI literacy before placement drives.</p>
+          </div>
+          <div class="bounty-pool-badge">
+            <i data-lucide="award"></i> ₹800 Top Referrer Prize Pool (₹500 & ₹300)
+          </div>
+        </div>
+
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Student Ambassador</th>
+                <th>College / Institute</th>
+                <th>Verified Referrals</th>
+                <th>Unlocked Perk</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-tbody">
+              <!-- Dynamically populated from real data or sample benchmarks -->
+              <tr class="sample-benchmark-row">
+                <td><span class="rank-badge rank-1">#01</span></td>
+                <td><strong>Sneha R.</strong> <small class="text-dim">(Sample Lead)</small></td>
+                <td>CBIT, Hyderabad (CSE '27)</td>
+                <td><span class="count-tag">42 Students</span></td>
+                <td><span class="perk-badge active">1st Place: ₹500 Amazon Voucher</span></td>
+              </tr>
+              <tr class="sample-benchmark-row">
+                <td><span class="rank-badge rank-2">#02</span></td>
+                <td><strong>Karthik R.</strong> <small class="text-dim">(Sample Lead)</small></td>
+                <td>PSG Tech, Coimbatore (IT '27)</td>
+                <td><span class="count-tag">36 Students</span></td>
+                <td><span class="perk-badge active">2nd Place: ₹300 Amazon Voucher</span></td>
+              </tr>
+              <tr class="sample-benchmark-row">
+                <td><span class="rank-badge rank-3">#03</span></td>
+                <td><strong>Vishal S.</strong> <small class="text-dim">(Sample Lead)</small></td>
+                <td>AKGEC, Ghaziabad (ECE '27)</td>
+                <td><span class="count-tag">28 Students</span></td>
+                <td><span class="perk-badge active">Top 50 AI Interview Pack</span></td>
+              </tr>
+              <tr id="user-live-row" class="user-row-highlight" style="display: none;">
+                <td><span class="rank-badge" id="user-rank-badge">Active</span></td>
+                <td><strong id="user-row-name">You</strong> <span class="badge-dot"></span></td>
+                <td id="user-row-college">Your College</td>
+                <td><span class="count-tag" id="user-row-count">0 Students</span></td>
+                <td><span class="perk-badge" id="user-row-perk">Share invite link to track</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-footnote">
+          * Benchmark sample data shown above. When batchmates register using your unique link, your real-time verified
+          count updates instantly.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pedagogy & Leadership Credibility -->
+  <section class="pedagogy-section">
+    <div class="container">
+      <div class="panel pedagogy-panel">
+        <div class="pedagogy-content">
+          <div class="pill-tag"><i data-lucide="sparkles"></i> Educational Pedagogy</div>
+          <h2>Founded by IIT & IIIT Alumni</h2>
+          <p>
+            NxtWave was founded by <strong>Rahul Attuluri (Ex-Amazon, IIIT Hyderabad)</strong>, <strong>Sashank Reddy
+              (IIT Bombay)</strong>, and <strong>Anupam Pedarla (IIT Kharagpur)</strong>. Recognized by NASSCOM and
+            partners with the National Skill Development Corporation (NSDC), NxtWave programs have trained students
+            across 650+ districts in industry-aligned software capabilities.
+          </p>
+          <div class="accreditations-row">
+            <span class="acc-badge"><i data-lucide="award"></i> World Economic Forum Technology Pioneer 2024</span>
+            <span class="acc-badge"><i data-lucide="shield-check"></i> NSDC Official Partner</span>
+            <span class="acc-badge"><i data-lucide="check-circle"></i> T-Hub Startup Spotlight Award</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Frequently Asked Questions -->
+  <section class="faq-section" id="faq-section">
+    <div class="container">
+      <div class="section-title-wrap text-center">
+        <div class="pill-tag"><i data-lucide="help-circle"></i> Questions & Answers</div>
+        <h2>Frequently Asked Questions</h2>
+        <p>Clear, direct answers for final-year engineering candidates.</p>
+      </div>
+
+      <div class="faq-grid">
+        <div class="faq-card panel">
+          <h4>Do I need paid GPU instances or heavy software installations?</h4>
+          <p>No. All tools, model APIs, and deployment servers used in this workshop operate entirely in the cloud or
+            through free, lightweight browser environments.</p>
+        </div>
+
+        <div class="faq-card panel">
+          <h4>Can I put this project directly on my resume?</h4>
+          <p>Yes. You will leave with a live web link, clean GitHub code, and guidance on measuring performance so you
+            can discuss your project with confidence during interviews.</p>
+        </div>
+
+        <div class="faq-card panel">
+          <h4>Is this workshop genuinely 100% free?</h4>
+          <p>Yes. The workshop is fully sponsored by NxtWave as part of our mission to bridge practical 21st-century
+            software skills for Indian engineering students.</p>
+        </div>
+
+        <div class="faq-card panel">
+          <h4>Will I receive a certificate?</h4>
+          <p>Yes, all students who complete the live build and submit their repository link will receive an official
+            digital Certificate of Completion from NxtWave.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Sticky Registration Bar -->
+  <aside class="mobile-bar" aria-label="Mobile Registration Action">
+    <div class="mobile-bar-info">
+      <span class="pulse-emerald"></span>
+      <span><strong>Free Registration</strong> • Class of 2027</span>
+    </div>
+    <a href="#register-section" class="btn btn-primary btn-sm">Claim Pass</a>
+  </aside>
+
+  <!-- Enterprise Footer -->
+  <footer class="site-footer">
+    <div class="container footer-layout">
+      <div class="footer-left">
+        <div class="brand-logo footer-logo">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+            <rect width="28" height="28" rx="6" fill="#0056D2" />
+            <path d="M7 19L11.5 9L16.5 19L21 9" stroke="white" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
+          <span class="footer-brand-name">NxtWave CCBP 4.0</span>
+        </div>
+        <p class="footer-desc">
+          Transforming youth into highly skilled tech professionals through industry-aligned skilling programs.
+        </p>
+      </div>
+      <div class="footer-right">
+        <p class="footer-copy">Simulation Prototype built for NxtWave Growth Intern Challenge evaluation.</p>
+        <p class="footer-subcopy">Official Partner: National Skill Development Corporation (Govt. of India)</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
