@@ -1092,6 +1092,38 @@ h1, h2, h3, h4 {
   padding: 38px;
 }
 
+/* Compact success state shown after registration (replaces form fields) */
+.registered-summary-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 32px 16px 16px;
+  gap: 10px;
+}
+
+.reg-summary-icon svg {
+  width: 52px;
+  height: 52px;
+  color: var(--emerald-500);
+}
+
+.reg-summary-text strong {
+  font-size: 1.15rem;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.reg-summary-text p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  margin-top: 6px;
+  line-height: 1.55;
+  max-width: 320px;
+}
+
+
 .urgency-counter {
   display: inline-flex;
   align-items: center;

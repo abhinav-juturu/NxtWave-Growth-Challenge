@@ -462,74 +462,89 @@
             <p>Fill in your details below to generate your personalized Admit Pass and join the workshop cohort.</p>
           </div>
 
-          <form id="registration-form" onsubmit="handleRegistration(event)">
-            <div class="form-grid-2">
-              <div class="form-control">
-                <label for="fullName">Full Name <span class="req">*</span></label>
-                <input type="text" id="fullName" placeholder="e.g. Rahul Sharma" required autocomplete="name">
-              </div>
-              <div class="form-control">
-                <label for="email">Student / College Email <span class="req">*</span></label>
-                <input type="email" id="email" placeholder="e.g. rahul@college.edu.in" required autocomplete="email">
-              </div>
+          <!-- Compact summary shown AFTER registration (hidden by default) -->
+          <div id="registered-summary" style="display:none;" class="registered-summary-box">
+            <div class="reg-summary-icon"><i data-lucide="check-circle-2"></i></div>
+            <div class="reg-summary-text">
+              <strong>You're registered!</strong>
+              <p>Your Admit Pass and Referral Hub are live on the right. Share your unique link with batchmates to unlock placement resources.</p>
             </div>
+            <a href="#referral-section" class="btn btn-primary btn-sm" style="margin-top:12px;">
+              <i data-lucide="trophy"></i> View Leaderboard
+            </a>
+          </div>
 
-            <div class="form-grid-2">
-              <div class="form-control">
-                <label for="whatsapp">WhatsApp Number <span class="req">*</span></label>
-                <input type="tel" id="whatsapp" placeholder="10-digit mobile e.g. 9876543210" pattern="[0-9]{10}"
-                  required autocomplete="tel">
-                <small class="hint-text">For session access link and starter repository invite</small>
+          <!-- All form fields wrapped so they can be hidden after registration -->
+          <div id="form-fields">
+            <form id="registration-form" onsubmit="handleRegistration(event)">
+              <div class="form-grid-2">
+                <div class="form-control">
+                  <label for="fullName">Full Name <span class="req">*</span></label>
+                  <input type="text" id="fullName" placeholder="e.g. Rahul Sharma" required autocomplete="name">
+                </div>
+                <div class="form-control">
+                  <label for="email">Student / College Email <span class="req">*</span></label>
+                  <input type="email" id="email" placeholder="e.g. rahul@college.edu.in" required autocomplete="email">
+                </div>
               </div>
-              <div class="form-control">
-                <label for="college">College / University Name <span class="req">*</span></label>
-                <input type="text" id="college" placeholder="e.g. JNTUH / CBIT / VIT / PSG Tech" required>
+
+              <div class="form-grid-2">
+                <div class="form-control">
+                  <label for="whatsapp">WhatsApp Number <span class="req">*</span></label>
+                  <input type="tel" id="whatsapp" placeholder="10-digit mobile e.g. 9876543210" pattern="[0-9]{10}"
+                    required autocomplete="tel">
+                  <small class="hint-text">For session access link and starter repository invite</small>
+                </div>
+                <div class="form-control">
+                  <label for="college">College / University Name <span class="req">*</span></label>
+                  <input type="text" id="college" placeholder="e.g. JNTUH / CBIT / VIT / PSG Tech" required>
+                </div>
               </div>
-            </div>
 
-            <div class="form-grid-2">
-              <div class="form-control">
-                <label for="graduationYear">Graduation Year <span class="req">*</span></label>
-                <select id="graduationYear" required>
-                  <option value="2027" selected>2027 (Current Final Year B.Tech / B.E.)</option>
-                  <option value="2028">2028 (Pre-Final Year Engineering)</option>
-                  <option value="2026">2026 (Recent Graduate / Placement Seeker)</option>
-                </select>
+              <div class="form-grid-2">
+                <div class="form-control">
+                  <label for="graduationYear">Graduation Year <span class="req">*</span></label>
+                  <select id="graduationYear" required>
+                    <option value="2027" selected>2027 (Current Final Year B.Tech / B.E.)</option>
+                    <option value="2028">2028 (Pre-Final Year Engineering)</option>
+                    <option value="2026">2026 (Recent Graduate / Placement Seeker)</option>
+                  </select>
+                </div>
+                <div class="form-control">
+                  <label for="projectTrack">Selected Project Track <span class="req">*</span></label>
+                  <select id="projectTrack" required>
+                    <option value="rag">Track 1: Full-Stack GenAI (Document QA Assistant)</option>
+                    <option value="agent">Track 2: AI Workflows (Job Matching Researcher)</option>
+                    <option value="cv">Track 3: Browser AI Vision (Webcam Focus Telemetry)</option>
+                    <option value="copilot">Track 4: Developer Tools (AI Code Reviewer &amp; Tester)</option>
+                  </select>
+                </div>
               </div>
+
               <div class="form-control">
-                <label for="projectTrack">Selected Project Track <span class="req">*</span></label>
-                <select id="projectTrack" required>
-                  <option value="rag">Track 1: Full-Stack GenAI (Document QA Assistant)</option>
-                  <option value="agent">Track 2: AI Workflows (Job Matching Researcher)</option>
-                  <option value="cv">Track 3: Browser AI Vision (Webcam Focus Telemetry)</option>
-                  <option value="copilot">Track 4: Developer Tools (AI Code Reviewer & Tester)</option>
-                </select>
+                <label for="referredBy">Referral Code (Optional)</label>
+                <input type="text" id="referredBy" placeholder="Auto-filled if using a peer's invite link">
               </div>
-            </div>
 
-            <div class="form-control">
-              <label for="referredBy">Referral Code (Optional)</label>
-              <input type="text" id="referredBy" placeholder="Auto-filled if using a peer's invite link">
-            </div>
+              <!-- DPDP Data Consent Checkbox -->
+              <div class="consent-checkbox-wrap">
+                <label class="consent-label">
+                  <input type="checkbox" id="consentCheck" required checked>
+                  <span>I consent to NxtWave collecting my contact details to deliver workshop access links, session
+                    updates, and skilling resources in accordance with the Privacy Policy.</span>
+                </label>
+              </div>
 
-            <!-- DPDP Data Consent Checkbox -->
-            <div class="consent-checkbox-wrap">
-              <label class="consent-label">
-                <input type="checkbox" id="consentCheck" required checked>
-                <span>I consent to NxtWave collecting my contact details to deliver workshop access links, session
-                  updates, and skilling resources in accordance with the Privacy Policy.</span>
-              </label>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit-btn">
-              <span>Generate Verified Student Pass</span>
-              <i data-lucide="shield-check"></i>
-            </button>
-            <div class="security-caption">
-              <i data-lucide="lock"></i> 100% Free • Certified by NxtWave • Official NSDC Training Partner
-            </div>
-          </form>
-        </div>
+              <button type="submit" class="btn btn-primary btn-block btn-lg" id="submit-btn">
+                <span>Generate Verified Student Pass</span>
+                <i data-lucide="shield-check"></i>
+              </button>
+              <div class="security-caption">
+                <i data-lucide="lock"></i> 100% Free • Certified by NxtWave • Official NSDC Training Partner
+              </div>
+            </form>
+          </div><!-- /#form-fields -->
+        </div><!-- /#form-panel -->
 
         <!-- Right Column: Badge + Viral Hub stacked -->
         <div class="registration-right-col">

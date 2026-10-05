@@ -488,7 +488,7 @@ function handleRegistration(e) {
     activeUser = existingRecord;
     renderExistingUserPass(activeUser);
     showToast("Welcome back! Your existing Admit Pass has been retrieved.");
-    document.getElementById("ticket-side-wrap").scrollIntoView({ behavior: "smooth" });
+    document.getElementById("register-section").scrollIntoView({ behavior: "smooth" });
     return;
   }
 
@@ -545,7 +545,7 @@ function handleRegistration(e) {
   }
 
   showToast(`Admit Pass Generated! Ticket ID: ${ticketId}`);
-  document.getElementById("ticket-side-wrap").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("register-section").scrollIntoView({ behavior: "smooth" });
 }
 
 // Render User Pass
@@ -595,6 +595,42 @@ function renderExistingUserPass(user) {
     submitBtn.style.backgroundColor = "#059669";
     if (window.lucide) window.lucide.createIcons();
   }
+
+  // Collapse the form to remove whitespace gap
+  collapseFormAfterRegistration(user);
+}
+
+// Collapse the form panel after successful registration
+function collapseFormAfterRegistration(user) {
+  // Show the success bar above the layout
+  const successBar = document.getElementById("registration-success-bar");
+  if (successBar) {
+    successBar.classList.remove("hidden");
+    const nameEl = document.getElementById("success-user-name");
+    const collegeEl = document.getElementById("success-user-college");
+    if (nameEl) nameEl.textContent = user.fullName;
+    if (collegeEl) collegeEl.textContent = user.college;
+  }
+
+  // Hide the form fields, show a compact registered summary instead
+  const formFields = document.getElementById("form-fields");
+  if (formFields) {
+    formFields.style.display = "none";
+  }
+  const registeredSummary = document.getElementById("registered-summary");
+  if (registeredSummary) {
+    registeredSummary.style.display = "block";
+  }
+}
+
+// Toggle form back open for editing
+function toggleEditRegistration() {
+  const formFields = document.getElementById("form-fields");
+  const registeredSummary = document.getElementById("registered-summary");
+  const successBar = document.getElementById("registration-success-bar");
+  if (formFields) formFields.style.display = "";
+  if (registeredSummary) registeredSummary.style.display = "none";
+  if (successBar) successBar.classList.add("hidden");
 }
 
 // Update Milestone Progress
